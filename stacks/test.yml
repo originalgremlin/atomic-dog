@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+    alpine:
+        image: tree3/sshd:alpine
+        ports:
+            - 22
+            - 1337
+        deploy:
+            replicas: 4
+
+    debian:
+        image: tree3/sshd:debian
+        ports:
+            - 22
+            - 1337
+        deploy:
+            replicas: 4
+
+    ubuntu:
+        image: tree3/sshd:ubuntu
+        ports:
+            - 22
+            - 1337
+        deploy:
+            replicas: 4
