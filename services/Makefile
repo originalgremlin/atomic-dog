@@ -1,6 +1,6 @@
 ## devops: create a dockerized build environment
 devops: $(shell find devops/*)
-	docker build -t atomic-dog/devops
+	docker build -t atomic-dog/devops devops
 	touch $(shell find devops)
 
 # makefile

@@ -11,12 +11,10 @@ RUN set -eu \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# gore: go repl
+# yaegi: go repl
 RUN set -eu \
     && go get -u \
-        github.com/motemen/gore/cmd/gore \
-        github.com/mdempsky/gocode \
-        github.com/k0kubun/pp
+        github.com/traefik/yaegi/cmd/yaegi
 
 # go packages
 RUN set -eu \

@@ -1,3 +1,6 @@
+CODE_SRCDIR=$(CURDIR)/code
+CODE_DSTDIR=/go/src/github.com/originalgremlin/atomic-dog
+
 # dockerized environment
 ## devops: create a dockerized build environment 
 devops:
@@ -11,7 +14,7 @@ sh: devops
 		docker run \
 			--entrypoint /bin/bash -it --rm \
 			--name dog \
-			--volume $(CURDIR):/go/src/github.com/originalgremlin/atomic-dog \
+			--volume $(CODE_SRCDIR):$(CODE_DSTDIR) \
 			atomic-dog/devops; \
 	fi
 
@@ -19,7 +22,7 @@ sh: devops
 ## build: build the application for various architectures
 build: build/linux build/mac build/windows
 build/linux: build/linux_386
-build/mac: build/darwin_386
+build/mac: build/darwin_amd64
 build/windows: build/windows_386
 build/%:
 	if [ -z "$?" ]; then \
@@ -29,31 +32,23 @@ build/%:
 			--rm \
 			--env GOOS=$$GOOS \
 			--env GOARCH=$$GOARCH \
-			--volume $(CURDIR):/go/src/github.com/originalgremlin/atomic-dog \
+			--volume $(CODE_SRCDIR):$(CODE_DSTDIR) \
 			--volume $(CURDIR)/bin:/go/bin \
 			atomic-dog/devops \
-			install github.com/originalgremlin/atomic-dog/cmd/dog; \
+			install github.com/originalgremlin/atomic-dog; \
 	fi
 
 ## clean: cleans binaries
 clean:
 	rm -rf $(CURDIR)/bin
 
-## doc: runs "go doc"
-doc:
-	docker run \
-		--rm \
-		--volume $(CURDIR):/go/src/github.com/originalgremlin/atomic-dog \
-		atomic-dog/devops \
-		doc
-
 ## fmt: runs "go fmt"
 fmt:
 	docker run \
 		--rm \
-		--volume $(CURDIR):/go/src/github.com/originalgremlin/atomic-dog \
+		--volume $(CODE_SRCDIR):$(CODE_DSTDIR) \
 		atomic-dog/devops \
-		fmt
+		fmt $(CODE_DSTDIR)/...
 
 ## run: runs "go run main.go"
 run:
@@ -61,7 +56,7 @@ run:
 		--rm \
 		--volume $(CURDIR):/go/src/github.com/originalgremlin/atomic-dog \
 		atomic-dog/devops \
-		run -race github.com/originalgremlin/atomic-dog/cmd/atomic-dog/main.go
+		run -race github.com/originalgremlin/atomic-dog/main.go
 
 ## test: runs test suite with default values
 test: swarm
