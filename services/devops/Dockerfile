@@ -4,6 +4,8 @@ FROM golang:1.15.6
 RUN set -eu \
     && apt-get -y update \
     && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
+        less \
+        libzmq3-dev \
         vim \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -16,7 +18,7 @@ RUN set -eu \
 # go packages
 RUN set -eu \
     && go get -u \
-        github.com/go-zeromq/zmq4
+        github.com/pebbe/zmq4
 
 # static files
 COPY root /

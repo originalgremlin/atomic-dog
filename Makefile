@@ -30,6 +30,7 @@ build/%:
 		echo Building for architecture $$GOOS\_$$GOARCH; \
 		docker run \
 			--rm \
+			--env CGO_ENABLED=1 \
 			--env GOOS=$$GOOS \
 			--env GOARCH=$$GOARCH \
 			--volume $(CODE_SRCDIR):$(CODE_DSTDIR) \
