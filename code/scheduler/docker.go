@@ -7,7 +7,7 @@ type Docker struct {
 }
 
 // Start TODO
-func (d *Docker) Start() (ID, error) {
+func (d *Docker) Start(image string) (ID, error) {
 	return "", nil
 }
 

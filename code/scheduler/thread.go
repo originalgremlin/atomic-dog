@@ -7,7 +7,7 @@ type Thread struct {
 }
 
 // Start TODO
-func (t *Thread) Start() (ID, error) {
+func (t *Thread) Start(image string) (ID, error) {
 	return "", nil
 }
 

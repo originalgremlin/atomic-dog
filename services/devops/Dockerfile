@@ -18,6 +18,7 @@ RUN set -eu \
 # go packages
 RUN set -eu \
     && go get -u \
+        github.com/vmihailenco/msgpack \
         github.com/pebbe/zmq4
 
 # static files

@@ -18,7 +18,7 @@ const (
 
 // Scheduler TODO
 type Scheduler interface {
-	Start() (ID, error)
+	Start(image string) (ID, error)
 	Status(id ID) (Status, error)
 	Stop(id ID) error
 }
