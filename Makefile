@@ -30,6 +30,7 @@ build/%:
 		echo Building for architecture $$GOOS\_$$GOARCH; \
 		docker run \
 			--rm \
+			--env CGO_ENABLED=1 \
 			--env GOOS=$$GOOS \
 			--env GOARCH=$$GOARCH \
 			--volume $(CODE_SRCDIR):$(CODE_DSTDIR) \
@@ -59,8 +60,8 @@ run:
 		run -race github.com/originalgremlin/atomic-dog/main.go
 
 ## test: runs test suite with default values
-test: swarm
-	go test -v -count=1 -race ./...
+test:
+	go test -v -count=1 -race $(CURDIR)/code/...
 
 # makefile
 ## help: prints this help message
